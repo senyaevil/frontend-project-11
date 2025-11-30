@@ -31,7 +31,7 @@ export default class App {
     const url = this.view.input.value.trim();
     
     this.view.setLoading(true);
-    this.view.setError(null); // Сбрасываем ошибку
+    this.view.setError(null);
 
     const validator = new Validator(createRssSchema(this.feeds));
     
@@ -65,6 +65,7 @@ export default class App {
     return fetchRSS(url)
       .then((content) => {
         const { feed, posts } = parseRSS(content);
+        console.log('Loaded posts:', posts); // Добавлено логирование постов
         const feedId = Date.now();
         
         this.feeds.push(url);
