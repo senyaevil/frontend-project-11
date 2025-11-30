@@ -1,5 +1,5 @@
 // src/view.js
-import { watch } from 'on-change';
+import onChange from 'on-change';
 import i18n from 'i18next';
 import { Modal } from 'bootstrap';
 
@@ -16,7 +16,7 @@ export default class View {
     this.createContainers();
     this.createModal();
     
-    this.state = watch({
+    this.state = onChange({
       error: null,
       valid: true,
       processed: false,
