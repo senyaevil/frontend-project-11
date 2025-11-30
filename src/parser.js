@@ -30,4 +30,4 @@ export const parseRSS = (content) => {
   } catch (error) {
     throw new Error('Invalid RSS format');
   }
-};
+}

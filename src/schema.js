@@ -21,4 +21,4 @@ export const createRssSchema = (existingUrls) => {
     .required()
     .url()
     .notOneOf(existingUrls);
-};
+}
