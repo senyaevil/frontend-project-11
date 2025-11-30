@@ -193,17 +193,15 @@ export default class View {
     
     postElement.innerHTML = `
       <div class="d-flex justify-content-between align-items-center">
-        <div class="flex-grow-1 me-3">
-          <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
-            ${post.title}
-          </a>
-        </div>
-        <div class="btn-group">
+        <a href="${post.link}" class="${titleClass} flex-grow-1 me-3" target="_blank" rel="noopener noreferrer">
+          ${post.title}
+        </a>
+        <div>
           <button type="button" class="btn btn-outline-primary btn-sm preview-btn" data-post-id="${post.id}">
-            ${i18n.t('ui.preview')}
+            <span>${i18n.t('ui.preview')}</span>
           </button>
           <a href="${post.link}" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
-            ${i18n.t('ui.read')}
+            <span>${i18n.t('ui.read')}</span>
           </a>
         </div>
       </div>
