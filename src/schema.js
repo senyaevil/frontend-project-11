@@ -1,16 +1,15 @@
 // src/schema.js
 import * as yup from 'yup';
-import i18n from 'i18next';
 
 const setupYupLocale = () => {
   yup.setLocale({
     string: {
-      url: () => ({ key: 'errors.url' })
+      url: () => ({ key: 'errors.url' }),
     },
     mixed: {
       required: () => ({ key: 'errors.required' }),
-      notOneOf: () => ({ key: 'errors.notOneOf' })
-    }
+      notOneOf: () => ({ key: 'errors.notOneOf' }),
+    },
   });
 };
 
@@ -21,4 +20,4 @@ export const createRssSchema = (existingUrls) => {
     .required()
     .url()
     .notOneOf(existingUrls);
-}
+};

@@ -18,4 +18,4 @@ export const fetchRSS = (url) => {
       }
       throw new Error('Network error');
     });
-}
+};

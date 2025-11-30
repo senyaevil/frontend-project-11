@@ -23,7 +23,7 @@ export default class View {
       processed: false,
       feeds: [],
       posts: [],
-      readPosts: new Set()
+      readPosts: new Set(),
     }, this.render.bind(this));
     
     this.modal = null;
@@ -243,7 +243,7 @@ export default class View {
     
     console.log('Modal content set:', {
       title: post.title,
-      description: post.description
+      description: post.description,
     });
     
     if (!this.modal) {

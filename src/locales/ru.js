@@ -7,7 +7,7 @@ export default {
       notOneOf: 'RSS уже существует',
       network: 'Ошибка сети',
       rss: 'Ресурс не содержит валидный RSS',
-      unknown: 'Неизвестная ошибка'
+      unknown: 'Неизвестная ошибка',
     },
     ui: {
       submit: 'Добавить',
@@ -18,7 +18,7 @@ export default {
       preview: 'Просмотр',
       read: 'Читать',
       close: 'Закрыть',
-      readFull: 'Читать полностью'
-    }
-  }
-}
+      readFull: 'Читать полностью',
+    },
+  },
+};

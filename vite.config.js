@@ -3,9 +3,9 @@ export default {
   base: './',
   build: {
     outDir: 'dist',
-    sourcemap: false
+    sourcemap: false,
   },
   server: {
-    port: 3000
-  }
-}
+    port: 3000,
+  },
+};

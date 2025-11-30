@@ -20,14 +20,14 @@ export const parseRSS = (content) => {
     };
 
     const items = doc.querySelectorAll('item');
-    const posts = Array.from(items).map((item) => ({
+    const posts = Array.from(items).map(item => ({
       title: item.querySelector('title')?.textContent || 'Без названия',
       link: item.querySelector('link')?.textContent || '#',
-      description: item.querySelector('description')?.textContent || ''
+      description: item.querySelector('description')?.textContent || '',
     }));
 
     return { feed, posts };
   } catch (error) {
     throw new Error('Invalid RSS format');
   }
-}
+};

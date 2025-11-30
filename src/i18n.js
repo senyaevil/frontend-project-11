@@ -7,7 +7,7 @@ export default () => {
     lng: 'ru',
     debug: false,
     resources: {
-      ru
-    }
+      ru,
+    },
   });
-}
+};
