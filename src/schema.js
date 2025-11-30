@@ -1,5 +1,5 @@
 // src/schema.js
-import * as yup from 'yup';
+import * as yup from 'yup'
 
 const setupYupLocale = () => {
   yup.setLocale({
@@ -10,14 +10,14 @@ const setupYupLocale = () => {
       required: () => ({ key: 'errors.required' }),
       notOneOf: () => ({ key: 'errors.notOneOf' }),
     },
-  });
-};
+  })
+}
 
 export const createRssSchema = (existingUrls) => {
-  setupYupLocale();
+  setupYupLocale()
   
   return yup.string()
     .required()
     .url()
-    .notOneOf(existingUrls);
-};
+    .notOneOf(existingUrls)
+}

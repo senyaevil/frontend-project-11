@@ -1,4 +1,3 @@
-// vite.config.js
 export default {
   base: './',
   build: {
@@ -8,4 +7,4 @@ export default {
   server: {
     port: 3000,
   },
-};
+}

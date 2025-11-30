@@ -1,20 +1,20 @@
 // src/view.js
-import onChange from 'on-change';
-import i18n from 'i18next';
-import { Modal } from 'bootstrap';
+import onChange from 'on-change'
+import i18n from 'i18next'
+import { Modal } from 'bootstrap'
 
 export default class View {
   constructor() {
-    this.form = document.getElementById('rss-form');
-    this.input = this.form.querySelector('input[name="url"]');
-    this.submitButton = this.form.querySelector('button[type="submit"]');
-    this.feedback = document.createElement('div');
+    this.form = document.getElementById('rss-form')
+    this.input = this.form.querySelector('input[name="url"]')
+    this.submitButton = this.form.querySelector('button[type="submit"]')
+    this.feedback = document.createElement('div')
     
-    this.feedback.className = 'feedback mt-2 small';
-    this.form.appendChild(this.feedback);
+    this.feedback.className = 'feedback mt-2 small'
+    this.form.appendChild(this.feedback)
     
-    this.createContainers();
-    this.createModal();
+    this.createContainers()
+    this.createModal()
     
     this.state = onChange({
       status: 'idle',
@@ -24,9 +24,9 @@ export default class View {
       feeds: [],
       posts: [],
       readPosts: new Set(),
-    }, this.render.bind(this));
+    }, this.render.bind(this))
     
-    this.modal = null;
+    this.modal = null
   }
 
   createModal() {
@@ -48,17 +48,17 @@ export default class View {
           </div>
         </div>
       </div>
-    `;
+    `
     
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    this.modal = new Modal(document.getElementById('postModal'));
+    document.body.insertAdjacentHTML('beforeend', modalHTML)
+    this.modal = new Modal(document.getElementById('postModal'))
   }
 
   createContainers() {
-    const container = document.querySelector('.container-fluid');
+    const container = document.querySelector('.container-fluid')
     
-    this.feedsContainer = document.createElement('div');
-    this.feedsContainer.className = 'mt-5';
+    this.feedsContainer = document.createElement('div')
+    this.feedsContainer.className = 'mt-5'
     this.feedsContainer.innerHTML = `
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -66,10 +66,10 @@ export default class View {
           <div id="feeds-list" class="list-group"></div>
         </div>
       </div>
-    `;
+    `
     
-    this.postsContainer = document.createElement('div');
-    this.postsContainer.className = 'mt-4';
+    this.postsContainer = document.createElement('div')
+    this.postsContainer.className = 'mt-4'
     this.postsContainer.innerHTML = `
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -77,118 +77,118 @@ export default class View {
           <div id="posts-list" class="list-group"></div>
         </div>
       </div>
-    `;
+    `
     
-    container.appendChild(this.feedsContainer);
-    container.appendChild(this.postsContainer);
+    container.appendChild(this.feedsContainer)
+    container.appendChild(this.postsContainer)
   }
 
   render(path, value) {
-    console.log('View render:', path, value);
+    console.log('View render:', path, value)
     
     if (path === 'status') {
-      this.handleStatus(value);
+      this.handleStatus(value)
     }
     
     if (path === 'error') {
-      this.handleError(value);
+      this.handleError(value)
     }
     
     if (path === 'valid') {
-      this.handleValidation(value);
+      this.handleValidation(value)
     }
     
     if (path === 'processed' && value) {
-      this.handleProcessed();
+      this.handleProcessed()
     }
     
     if (path === 'feeds') {
-      this.renderFeeds();
+      this.renderFeeds()
     }
     
     if (path === 'posts' || path === 'readPosts') {
-      this.renderPosts();
+      this.renderPosts()
     }
   }
 
   handleStatus(status) {
-    console.log('Handle status:', status);
+    console.log('Handle status:', status)
     
     if (status === 'loading') {
-      this.submitButton.disabled = true;
-      this.submitButton.textContent = 'Загрузка...';
+      this.submitButton.disabled = true
+      this.submitButton.textContent = 'Загрузка...'
     } else {
-      this.submitButton.disabled = false;
-      this.submitButton.textContent = i18n.t('ui.submit');
+      this.submitButton.disabled = false
+      this.submitButton.textContent = i18n.t('ui.submit')
     }
     
     if (status === 'success') {
-      this.feedback.textContent = i18n.t('ui.success');
-      this.feedback.className = 'feedback mt-2 small text-success';
+      this.feedback.textContent = i18n.t('ui.success')
+      this.feedback.className = 'feedback mt-2 small text-success'
     }
   }
 
   handleError(error) {
-    console.log('Handle error:', error);
+    console.log('Handle error:', error)
     
     if (error) {
-      this.feedback.textContent = i18n.t(error);
-      this.feedback.className = 'feedback mt-2 small text-danger';
+      this.feedback.textContent = i18n.t(error)
+      this.feedback.className = 'feedback mt-2 small text-danger'
     } else {
-      this.feedback.textContent = '';
-      this.feedback.className = 'feedback mt-2 small';
+      this.feedback.textContent = ''
+      this.feedback.className = 'feedback mt-2 small'
     }
   }
 
   handleValidation(valid) {
-    this.input.classList.toggle('is-invalid', !valid);
-    this.input.classList.toggle('is-valid', valid);
+    this.input.classList.toggle('is-invalid', !valid)
+    this.input.classList.toggle('is-valid', valid)
   }
 
   handleProcessed() {
-    this.input.value = '';
-    this.input.focus();
-    this.state.valid = true;
-    this.state.processed = false;
+    this.input.value = ''
+    this.input.focus()
+    this.state.valid = true
+    this.state.processed = false
   }
 
   renderFeeds() {
-    const feedsList = document.getElementById('feeds-list');
-    if (!feedsList) return;
+    const feedsList = document.getElementById('feeds-list')
+    if (!feedsList) return
     
-    feedsList.innerHTML = '';
+    feedsList.innerHTML = ''
     
-    this.state.feeds.forEach(feed => {
-      const feedElement = document.createElement('div');
-      feedElement.className = 'list-group-item';
+    this.state.feeds.forEach((feed) => {
+      const feedElement = document.createElement('div')
+      feedElement.className = 'list-group-item'
       feedElement.innerHTML = `
         <h3 class="h6">${feed.title}</h3>
         <p class="mb-0 small">${feed.description}</p>
-      `;
-      feedsList.appendChild(feedElement);
-    });
+      `
+      feedsList.appendChild(feedElement)
+    })
   }
 
   renderPosts() {
-    const postsList = document.getElementById('posts-list');
-    if (!postsList) return;
+    const postsList = document.getElementById('posts-list')
+    if (!postsList) return
     
-    postsList.innerHTML = '';
+    postsList.innerHTML = ''
     
-    const sortedPosts = [...this.state.posts].sort((a, b) => b.id - a.id);
+    const sortedPosts = [...this.state.posts].sort((a, b) => b.id - a.id)
     
-    sortedPosts.forEach(post => {
-      const isRead = this.state.readPosts.has(post.id);
-      const postElement = this.createPostElement(post, isRead);
-      postsList.appendChild(postElement);
-    });
+    sortedPosts.forEach((post) => {
+      const isRead = this.state.readPosts.has(post.id)
+      const postElement = this.createPostElement(post, isRead)
+      postsList.appendChild(postElement)
+    })
   }
 
   createPostElement(post, isRead) {
-    const postElement = document.createElement('div');
-    postElement.className = 'list-group-item';
+    const postElement = document.createElement('div')
+    postElement.className = 'list-group-item'
     
-    const titleClass = isRead ? 'fw-normal' : 'fw-bold';
+    const titleClass = isRead ? 'fw-normal' : 'fw-bold'
     
     postElement.innerHTML = `
       <div class="d-flex justify-content-between align-items-center">
@@ -202,88 +202,88 @@ export default class View {
           ${i18n.t('ui.read')}
         </a>
       </div>
-    `;
+    `
     
-    const previewBtn = postElement.querySelector('.preview-btn');
+    const previewBtn = postElement.querySelector('.preview-btn')
     previewBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.handlePreviewClick(post);
-    });
+      e.preventDefault()
+      this.handlePreviewClick(post)
+    })
     
-    return postElement;
+    return postElement
   }
 
   handlePreviewClick(post) {
-    console.log('Preview clicked for post:', post);
-    this.showModal(post);
-    this.markAsRead(post.id);
+    console.log('Preview clicked for post:', post)
+    this.showModal(post)
+    this.markAsRead(post.id)
   }
 
   showModal(post) {
-    console.log('showModal called for post:', post);
+    console.log('showModal called for post:', post)
     
-    const modalElement = document.getElementById('postModal');
+    const modalElement = document.getElementById('postModal')
     if (!modalElement) {
-      console.error('Modal element not found!');
-      return;
+      console.error('Modal element not found!')
+      return
     }
     
-    const modalTitle = document.getElementById('postModalLabel');
-    const modalDescription = document.getElementById('postDescription');
-    const modalLink = document.getElementById('postLink');
+    const modalTitle = document.getElementById('postModalLabel')
+    const modalDescription = document.getElementById('postDescription')
+    const modalLink = document.getElementById('postLink')
     
     if (!modalTitle || !modalDescription || !modalLink) {
-      console.error('Modal elements not found!');
-      return;
+      console.error('Modal elements not found!')
+      return
     }
     
-    modalTitle.textContent = post.title;
-    modalDescription.textContent = post.description || 'Описание отсутствует';
-    modalLink.href = post.link;
+    modalTitle.textContent = post.title
+    modalDescription.textContent = post.description || 'Описание отсутствует'
+    modalLink.href = post.link
     
     console.log('Modal content set:', {
       title: post.title,
       description: post.description,
-    });
+    })
     
     if (!this.modal) {
-      console.log('Initializing modal...');
-      this.modal = new Modal(modalElement);
+      console.log('Initializing modal...')
+      this.modal = new Modal(modalElement)
     }
     
-    this.modal.show();
-    console.log('Modal show() called');
+    this.modal.show()
+    console.log('Modal show() called')
   }
 
   markAsRead(postId) {
-    this.state.readPosts.add(postId);
+    this.state.readPosts.add(postId)
   }
 
   setError(message) {
-    this.state.status = 'error';
-    this.state.error = message;
-    this.state.valid = false;
+    this.state.status = 'error'
+    this.state.error = message
+    this.state.valid = false
   }
 
   setSuccess() {
-    this.state.status = 'success';
-    this.state.error = null;
-    this.state.valid = true;
+    this.state.status = 'success'
+    this.state.error = null
+    this.state.valid = true
   }
 
   setLoading(loading) {
-    this.state.status = loading ? 'loading' : 'idle';
+    this.state.status = loading ? 'loading' : 'idle'
   }
 
   markProcessed() {
-    this.state.processed = true;
+    this.state.processed = true
   }
 
   addFeed(feed) {
-    this.state.feeds.push({ ...feed, id: Date.now() });
+    this.state.feeds.push({ ...feed, id: Date.now() })
   }
 
   addPosts(posts) {
-    this.state.posts = [...this.state.posts, ...posts];
+    this.state.posts = [...this.state.posts, ...posts]
   }
 }
