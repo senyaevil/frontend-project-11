@@ -185,38 +185,35 @@ export default class View {
     });
   }
 
-  createPostElement(post, isRead) {
-    const postElement = document.createElement('div');
-    postElement.className = 'list-group-item';
-    
-    const titleClass = isRead ? 'fw-normal' : 'fw-bold';
-    
-    postElement.innerHTML = `
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="me-3 flex-grow-1">
-          <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
-            ${post.title}
-          </a>
-        </div>
-        <div class="btn-group">
-          <button type="button" class="btn btn-outline-primary btn-sm preview-btn" data-post-id="${post.id}">
-            ${i18n.t('ui.preview')}
-          </button>
-          <a href="${post.link}" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
-            ${i18n.t('ui.read')}
-          </a>
-        </div>
-      </div>
-    `;
-    
-    const previewBtn = postElement.querySelector('.preview-btn');
-    previewBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.handlePreviewClick(post);
-    });
-    
-    return postElement;
-  }
+  // src/view.js - метод createPostElement
+createPostElement(post, isRead) {
+  const postElement = document.createElement('div');
+  postElement.className = 'list-group-item';
+  
+  const titleClass = isRead ? 'fw-normal' : 'fw-bold';
+  
+  postElement.innerHTML = `
+    <div class="d-flex justify-content-between align-items-center">
+      <a href="${post.link}" class="${titleClass} flex-grow-1 me-3" target="_blank" rel="noopener noreferrer">
+        ${post.title}
+      </a>
+      <button type="button" class="btn btn-outline-primary btn-sm preview-btn" data-post-id="${post.id}">
+        ${i18n.t('ui.preview')}
+      </button>
+      <a href="${post.link}" class="btn btn-primary btn-sm ms-1" target="_blank" rel="noopener noreferrer">
+        ${i18n.t('ui.read')}
+      </a>
+    </div>
+  `;
+  
+  const previewBtn = postElement.querySelector('.preview-btn');
+  previewBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    this.handlePreviewClick(post);
+  });
+  
+  return postElement;
+}
 
   handlePreviewClick(post) {
     this.showModal(post);
@@ -267,3 +264,4 @@ export default class View {
     this.state.posts = [...this.state.posts, ...posts];
   }
 }
+
