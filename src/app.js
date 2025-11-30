@@ -50,9 +50,6 @@ export default class App {
         }
         this.view.setLoading(false)
       })
-      .then(() => {
-        this.view.setLoading(false)
-      })
   }
 
   addFeed(url) {
@@ -90,5 +87,5 @@ export default class App {
     }
     return 'errors.unknown'
   }
-  
+
 }
