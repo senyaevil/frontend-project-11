@@ -187,23 +187,25 @@ export default class View {
 
   createPostElement(post, isRead) {
     const postElement = document.createElement('div');
-    postElement.className = 'list-group-item d-flex justify-content-between align-items-center';
+    postElement.className = 'list-group-item';
     
     const titleClass = isRead ? 'fw-normal' : 'fw-bold';
     
     postElement.innerHTML = `
-      <div class="flex-grow-1 me-3">
-        <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
-          ${post.title}
-        </a>
-      </div>
-      <div class="btn-group">
-        <button type="button" class="btn btn-outline-primary btn-sm preview-btn" data-post-id="${post.id}">
-          ${i18n.t('ui.preview')}
-        </button>
-        <a href="${post.link}" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
-          ${i18n.t('ui.read')}
-        </a>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="flex-grow-1 me-3">
+          <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
+            ${post.title}
+          </a>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-primary btn-sm preview-btn" data-post-id="${post.id}">
+            ${i18n.t('ui.preview')}
+          </button>
+          <a href="${post.link}" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
+            ${i18n.t('ui.read')}
+          </a>
+        </div>
       </div>
     `;
     
