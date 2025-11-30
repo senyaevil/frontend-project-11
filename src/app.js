@@ -45,9 +45,13 @@ export default class App {
       })
       .catch((error) => {
         console.error('Submit error:', error.message)
-        if (error.message !== 'Validation failed') { this.view.setError(this.getErrorMessage(error))}
-      }) .finally(() => {
-        this.view.setLoading(false) })
+        if (error.message !== 'Validation failed') {
+          this.view.setError(this.getErrorMessage(error))
+        }
+      })
+      .finally(() => {
+        this.view.setLoading(false)
+      })
   }
 
   addFeed(url) {
@@ -86,4 +90,3 @@ export default class App {
     return 'errors.unknown'
   }
 }
-
