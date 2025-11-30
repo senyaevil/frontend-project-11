@@ -185,8 +185,7 @@ export default class View {
     });
   }
 
-// Альтернативное решение - использовать data-атрибут
-// src/view.js - метод createPostElement
+// Альтернатива - минималистичный подход
 createPostElement(post, isRead) {
   const postElement = document.createElement('div');
   postElement.className = 'list-group-item';
@@ -195,12 +194,10 @@ createPostElement(post, isRead) {
   
   postElement.innerHTML = `
     <div class="d-flex justify-content-between align-items-center">
-      <div class="flex-grow-1 me-3">
-        <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
-          ${post.title}
-        </a>
-      </div>
-      <button type="button" class="btn btn-outline-primary btn-sm preview-btn" data-post-id="${post.id}">
+      <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
+        ${post.title}
+      </a>
+      <button type="button" class="btn btn-outline-primary btn-sm preview-btn ms-3" data-post-id="${post.id}">
         ${i18n.t('ui.preview')}
       </button>
       <a href="${post.link}" class="btn btn-primary btn-sm ms-1" target="_blank" rel="noopener noreferrer">
@@ -267,6 +264,7 @@ createPostElement(post, isRead) {
     this.state.posts = [...this.state.posts, ...posts];
   }
 }
+
 
 
 
