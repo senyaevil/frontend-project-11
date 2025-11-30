@@ -11,6 +11,7 @@ export default class App {
     this.feeds = []
     this.feedData = []
     this.posts = []
+
     initI18n().then(() => {
       this.init()
     })
@@ -28,6 +29,7 @@ export default class App {
     const url = this.view.input.value.trim()
     this.view.setLoading(true)
     this.view.setError(null)
+
     const validator = new Validator(createRssSchema(this.feeds))
     validator.validate(url)
       .then((result) => {
@@ -57,6 +59,7 @@ export default class App {
       .then((content) => {
         const { feed, posts } = parseRSS(content)
         console.log('Loaded posts:', posts)
+
         const feedId = Date.now()
         this.feeds.push(url)
         this.feedData.push({
@@ -66,20 +69,23 @@ export default class App {
           description: feed.description,
           postLinks: posts.map(post => post.link),
         })
+
         const postsWithFeedId = posts.map(post => ({
           ...post,
           id: Date.now() + Math.random(),
           feedId,
           description: post.description || '',
         }))
+
         this.posts = [...this.posts, ...postsWithFeedId]
+
         this.view.addFeed(feed)
         this.view.addPosts(postsWithFeedId)
         return Promise.resolve()
       })
   }
 
- getErrorMessage(error) {
+  getErrorMessage(error) {
     if (error.message.includes('Network')) {
       return 'errors.network'
     } else if (error.message.includes('RSS') || error.message.includes('Invalid RSS')) {
@@ -87,5 +93,4 @@ export default class App {
     }
     return 'errors.unknown'
   }
-
 }
