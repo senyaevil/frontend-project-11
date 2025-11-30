@@ -27,7 +27,6 @@ export default class View {
     }, this.render.bind(this));
     
     this.modal = null;
-    this.currentPost = null;
   }
 
   createModal() {
@@ -58,6 +57,7 @@ export default class View {
   createContainers() {
     const container = document.querySelector('.container-fluid');
     
+    // Создаем контейнеры для фидов и постов
     this.feedsContainer = document.createElement('div');
     this.feedsContainer.className = 'mt-5';
     this.feedsContainer.innerHTML = `
@@ -85,6 +85,8 @@ export default class View {
   }
 
   render(path, value) {
+    console.log('View render:', path, value);
+    
     if (path === 'error') {
       this.handleError(value);
     }
@@ -111,6 +113,7 @@ export default class View {
   }
 
   handleError(error) {
+    console.log('Handle error:', error);
     if (error) {
       this.feedback.textContent = i18n.t(`errors.${error}`);
       this.feedback.className = 'feedback mt-2 small text-danger';
@@ -130,7 +133,6 @@ export default class View {
     this.input.value = '';
     this.input.focus();
     this.state.valid = true;
-    this.state.error = null;
     this.state.processed = false;
   }
 
@@ -203,7 +205,6 @@ export default class View {
   }
 
   handlePreviewClick(post) {
-    this.currentPost = post;
     this.showModal(post);
     this.markAsRead(post.id);
   }
