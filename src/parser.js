@@ -1,8 +1,8 @@
-export const parseRSS = (content) => {
+export const parseRSS = content => {
   try {
     const parser = new DOMParser()
     const doc = parser.parseFromString(content, 'text/xml')
-    
+
     const parseError = doc.querySelector('parsererror')
     if (parseError) {
       throw new Error('Invalid RSS format')
