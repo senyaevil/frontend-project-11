@@ -193,7 +193,7 @@ export default class View {
     
     postElement.innerHTML = `
       <div class="flex-grow-1">
-        <a href="${post.link}" class="${titleClass} text-decoration-none" target="_blank" rel="noopener noreferrer">
+        <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
           ${post.title}
         </a>
       </div>
