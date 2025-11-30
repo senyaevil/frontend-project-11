@@ -33,14 +33,10 @@ export default class App {
   handleSubmit() {
     const url = this.view.input.value.trim();
     
-    if (!url) {
-      this.view.setError('required');
-      return;
-    }
-    
     const validator = new Validator(createRssSchema(this.feeds));
     
     this.view.setLoading(true);
+    this.view.setError(null);
     
     validator.validate(url)
       .then((result) => {
@@ -54,13 +50,10 @@ export default class App {
       })
       .then(() => {
         this.view.markProcessed();
-        this.view.setError(null);
-        
-        if (this.feeds.length === 1) {
-          this.updater.start();
-        }
+        this.view.setError(null); // Это покажет сообщение об успехе
       })
       .catch((error) => {
+        console.error('Error:', error.message);
         if (error.message !== 'Validation failed') {
           this.view.setError(this.getErrorMessage(error));
         }
@@ -72,20 +65,20 @@ export default class App {
 
   addFeed(url) {
     return this.fetchRSS(url)
-      .then((content) => this.parseRSS(content))
-      .then(({ feed, posts }) => {
+      .then((content) => {
+        const result = this.parseRSS(content);
         const feedId = Date.now();
         
         this.feeds.push(url);
         this.feedData.push({
           id: feedId,
           url,
-          title: feed.title,
-          description: feed.description,
-          postLinks: posts.map(post => post.link)
+          title: result.feed.title,
+          description: result.feed.description,
+          postLinks: result.posts.map(post => post.link)
         });
         
-        const postsWithFeedId = posts.map(post => ({
+        const postsWithFeedId = result.posts.map(post => ({
           ...post,
           id: Date.now() + Math.random(),
           feedId,
@@ -94,7 +87,7 @@ export default class App {
         
         this.posts = [...this.posts, ...postsWithFeedId];
         
-        this.view.addFeed(feed);
+        this.view.addFeed(result.feed);
         this.view.addPosts(postsWithFeedId);
       });
   }
@@ -129,7 +122,7 @@ export default class App {
   getErrorMessage(error) {
     if (error.message.includes('Network')) {
       return 'network';
-    } else if (error.message.includes('RSS')) {
+    } else if (error.message.includes('RSS') || error.message.includes('Invalid RSS')) {
       return 'rss';
     }
     return 'unknown';

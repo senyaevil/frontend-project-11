@@ -10,7 +10,7 @@ export default class View {
     this.submitButton = this.form.querySelector('button[type="submit"]');
     this.feedback = document.createElement('div');
     
-    this.feedback.className = 'feedback mt-2';
+    this.feedback.className = 'feedback mt-2 small';
     this.form.appendChild(this.feedback);
     
     this.createContainers();
@@ -59,6 +59,7 @@ export default class View {
     const container = document.querySelector('.container-fluid');
     
     this.feedsContainer = document.createElement('div');
+    this.feedsContainer.className = 'mt-5';
     this.feedsContainer.innerHTML = `
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -69,6 +70,7 @@ export default class View {
     `;
     
     this.postsContainer = document.createElement('div');
+    this.postsContainer.className = 'mt-4';
     this.postsContainer.innerHTML = `
       <div class="row justify-content-center">
         <div class="col-md-6">
@@ -111,10 +113,11 @@ export default class View {
   handleError(error) {
     if (error) {
       this.feedback.textContent = i18n.t(`errors.${error}`);
-      this.feedback.className = 'feedback mt-2 text-danger';
+      this.feedback.className = 'feedback mt-2 small text-danger';
     } else {
+      // Когда error = null, показываем успешное сообщение
       this.feedback.textContent = i18n.t('ui.success');
-      this.feedback.className = 'feedback mt-2 text-success';
+      this.feedback.className = 'feedback mt-2 small text-success';
     }
   }
 
