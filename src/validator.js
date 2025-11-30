@@ -10,6 +10,7 @@ export default class Validator {
       .catch((error) => {
         const errors = error.inner.reduce((acc, curr) => {
           const errorKey = curr.message?.key || curr.message;
+          // Используем ключ ошибки напрямую
           acc._form = errorKey;
           return acc;
         }, {});

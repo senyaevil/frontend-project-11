@@ -31,20 +31,22 @@ export default class App {
     const url = this.view.input.value.trim();
     
     this.view.setLoading(true);
-    this.view.setError(null); // Сбрасываем ошибку перед началом
+    this.view.setError(null);
 
     const validator = new Validator(createRssSchema(this.feeds));
     
     validator.validate(url)
       .then((result) => {
+        console.log('Validation result:', result);
         if (!result.isValid) {
-          this.view.setError(Object.values(result.errors)[0]);
+          // Передаем ключ ошибки напрямую
+          this.view.setError(result.errors._form);
           return Promise.reject(new Error('Validation failed'));
         }
         return this.addFeed(url);
       })
       .then(() => {
-        // Успешное добавление - устанавливаем error в null чтобы показать успешное сообщение
+        // Успешное добавление
         this.view.setError(null);
         this.view.markProcessed();
       })
@@ -92,10 +94,10 @@ export default class App {
 
   getErrorMessage(error) {
     if (error.message.includes('Network')) {
-      return 'network';
+      return 'errors.network';
     } else if (error.message.includes('RSS') || error.message.includes('Invalid RSS')) {
-      return 'rss';
+      return 'errors.rss';
     }
-    return 'unknown';
+    return 'errors.unknown';
   }
 }

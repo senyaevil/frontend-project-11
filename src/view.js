@@ -17,7 +17,7 @@ export default class View {
     this.createModal();
     
     this.state = onChange({
-      error: 'initial', // Начальное состояние не null
+      error: null,
       valid: true,
       processed: false,
       feeds: [],
@@ -117,15 +117,17 @@ export default class View {
     // Очищаем предыдущие классы
     this.feedback.className = 'feedback mt-2 small';
     
-    if (error && error !== 'initial') {
-      this.feedback.textContent = i18n.t(`errors.${error}`);
+    if (error) {
+      // Получаем текст ошибки через i18next
+      const errorText = i18n.t(error);
+      this.feedback.textContent = errorText;
       this.feedback.classList.add('text-danger');
     } else if (error === null) {
       // Когда error = null, показываем успешное сообщение
       this.feedback.textContent = i18n.t('ui.success');
       this.feedback.classList.add('text-success');
     } else {
-      // initial state - очищаем сообщение
+      // Очищаем сообщение
       this.feedback.textContent = '';
     }
   }
