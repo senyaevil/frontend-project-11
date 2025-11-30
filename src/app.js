@@ -21,7 +21,7 @@ export default class App {
   init() {
     this.view = new View()
 
-    this.view.form.addEventListener('submit', (e) => {
+    this.view.form.addEventListener('submit', e => {
       e.preventDefault()
       this.handleSubmit()
     })
@@ -36,7 +36,7 @@ export default class App {
     const validator = new Validator(createRssSchema(this.feeds))
 
     validator.validate(url)
-      .then((result) => {
+      .then(result => {
         console.log('Validation result:', result)
         if (!result.isValid) {
           this.view.setError(result.errors._form)
@@ -49,7 +49,7 @@ export default class App {
         this.view.setSuccess()
         this.view.markProcessed()
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Submit error:', error.message)
         if (error.message !== 'Validation failed') {
           this.view.setError(this.getErrorMessage(error))
@@ -62,7 +62,7 @@ export default class App {
 
   addFeed(url) {
     return fetchRSS(url)
-      .then((content) => {
+      .then(content => {
         const { feed, posts } = parseRSS(content)
         console.log('Loaded posts:', posts)
         const feedId = Date.now()
