@@ -79,7 +79,7 @@ export default class App {
       })
   }
 
-  getErrorMessage(error) {
+ getErrorMessage(error) {
     if (error.message.includes('Network')) {
       return 'errors.network'
     } else if (error.message.includes('RSS') || error.message.includes('Invalid RSS')) {
