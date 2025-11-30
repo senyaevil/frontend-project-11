@@ -14,7 +14,14 @@
                 <h1 class="text-center my-4">RSS агрегатор</h1>
                 <form id="rss-form" class="mb-4">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Введите RSS ссылку" required>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Введите RSS ссылку" 
+                            required
+                            aria-label="url"
+                            name="url"
+                            autocomplete="off">
                         <button class="btn btn-primary" type="submit">Добавить</button>
                     </div>
                 </form>

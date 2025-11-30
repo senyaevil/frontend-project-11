@@ -6,7 +6,7 @@ import { Modal } from 'bootstrap';
 export default class View {
   constructor() {
     this.form = document.getElementById('rss-form');
-    this.input = this.form.querySelector('input');
+    this.input = this.form.querySelector('input[name="url"]');
     this.submitButton = this.form.querySelector('button[type="submit"]');
     this.feedback = document.createElement('div');
     
@@ -62,7 +62,7 @@ export default class View {
     this.feedsContainer.innerHTML = `
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <h2>${i18n.t('ui.feeds')}</h2>
+          <h2 class="h4">${i18n.t('ui.feeds')}</h2>
           <div id="feeds-list" class="list-group"></div>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default class View {
     this.postsContainer.innerHTML = `
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <h2>${i18n.t('ui.posts')}</h2>
+          <h2 class="h4">${i18n.t('ui.posts')}</h2>
           <div id="posts-list" class="list-group"></div>
         </div>
       </div>
@@ -146,8 +146,8 @@ export default class View {
       const feedElement = document.createElement('div');
       feedElement.className = 'list-group-item';
       feedElement.innerHTML = `
-        <h5 class="mb-1">${feed.title}</h5>
-        <p class="mb-1">${feed.description}</p>
+        <h3 class="h6">${feed.title}</h3>
+        <p class="mb-0 small">${feed.description}</p>
       `;
       feedsList.appendChild(feedElement);
     });

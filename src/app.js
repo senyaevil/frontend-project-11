@@ -32,6 +32,12 @@ export default class App {
 
   handleSubmit() {
     const url = this.view.input.value.trim();
+    
+    if (!url) {
+      this.view.setError('required');
+      return;
+    }
+    
     const validator = new Validator(createRssSchema(this.feeds));
     
     this.view.setLoading(true);
