@@ -1,4 +1,3 @@
-// src/locales/ru.js
 export default {
   translation: {
     errors: {
@@ -21,4 +20,5 @@ export default {
       readFull: 'Читать полностью',
     },
   },
-};
+}
+//
