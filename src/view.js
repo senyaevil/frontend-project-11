@@ -1,4 +1,3 @@
-// src/view.js
 import onChange from 'on-change'
 import i18n from 'i18next'
 import { Modal } from 'bootstrap'
@@ -9,13 +8,13 @@ export default class View {
     this.input = this.form.querySelector('input[name="url"]')
     this.submitButton = this.form.querySelector('button[type="submit"]')
     this.feedback = document.createElement('div')
-
+    
     this.feedback.className = 'feedback mt-2 small'
     this.form.appendChild(this.feedback)
-
+    
     this.createContainers()
     this.createModal()
-
+    
     this.state = onChange({
       status: 'idle',
       error: null,
@@ -25,7 +24,7 @@ export default class View {
       posts: [],
       readPosts: new Set(),
     }, this.render.bind(this))
-
+    
     this.modal = null
   }
 
@@ -49,14 +48,14 @@ export default class View {
         </div>
       </div>
     `
-
+    
     document.body.insertAdjacentHTML('beforeend', modalHTML)
     this.modal = new Modal(document.getElementById('postModal'))
   }
 
   createContainers() {
     const container = document.querySelector('.container-fluid')
-
+    
     this.feedsContainer = document.createElement('div')
     this.feedsContainer.className = 'mt-5'
     this.feedsContainer.innerHTML = `
@@ -67,7 +66,7 @@ export default class View {
         </div>
       </div>
     `
-
+    
     this.postsContainer = document.createElement('div')
     this.postsContainer.className = 'mt-4'
     this.postsContainer.innerHTML = `
@@ -78,34 +77,34 @@ export default class View {
         </div>
       </div>
     `
-
+    
     container.appendChild(this.feedsContainer)
     container.appendChild(this.postsContainer)
   }
 
   render(path, value) {
     console.log('View render:', path, value)
-
+    
     if (path === 'status') {
       this.handleStatus(value)
     }
-
+    
     if (path === 'error') {
       this.handleError(value)
     }
-
+    
     if (path === 'valid') {
       this.handleValidation(value)
     }
-
+    
     if (path === 'processed' && value) {
       this.handleProcessed()
     }
-
+    
     if (path === 'feeds') {
       this.renderFeeds()
     }
-
+    
     if (path === 'posts' || path === 'readPosts') {
       this.renderPosts()
     }
@@ -113,16 +112,15 @@ export default class View {
 
   handleStatus(status) {
     console.log('Handle status:', status)
-
+    
     if (status === 'loading') {
       this.submitButton.disabled = true
       this.submitButton.textContent = 'Загрузка...'
-    }
-     else {
+    } else {
       this.submitButton.disabled = false
       this.submitButton.textContent = i18n.t('ui.submit')
     }
-
+    
     if (status === 'success') {
       this.feedback.textContent = i18n.t('ui.success')
       this.feedback.className = 'feedback mt-2 small text-success'
@@ -131,12 +129,11 @@ export default class View {
 
   handleError(error) {
     console.log('Handle error:', error)
-
+    
     if (error) {
       this.feedback.textContent = i18n.t(error)
       this.feedback.className = 'feedback mt-2 small text-danger'
-        }
- else {
+    } else {
       this.feedback.textContent = ''
       this.feedback.className = 'feedback mt-2 small'
     }
@@ -157,10 +154,10 @@ export default class View {
   renderFeeds() {
     const feedsList = document.getElementById('feeds-list')
     if (!feedsList) return
-
+    
     feedsList.innerHTML = ''
-
-    this.state.feeds.forEach(feed => {
+    
+    this.state.feeds.forEach((feed) => {
       const feedElement = document.createElement('div')
       feedElement.className = 'list-group-item'
       feedElement.innerHTML = `
@@ -174,12 +171,12 @@ export default class View {
   renderPosts() {
     const postsList = document.getElementById('posts-list')
     if (!postsList) return
-
+    
     postsList.innerHTML = ''
-
+    
     const sortedPosts = [...this.state.posts].sort((a, b) => b.id - a.id)
-
-    sortedPosts.forEach(post => {
+    
+    sortedPosts.forEach((post) => {
       const isRead = this.state.readPosts.has(post.id)
       const postElement = this.createPostElement(post, isRead)
       postsList.appendChild(postElement)
@@ -189,9 +186,9 @@ export default class View {
   createPostElement(post, isRead) {
     const postElement = document.createElement('div')
     postElement.className = 'list-group-item'
-
+    
     const titleClass = isRead ? 'fw-normal' : 'fw-bold'
-
+    
     postElement.innerHTML = `
       <div class="d-flex justify-content-between align-items-center">
         <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
@@ -205,13 +202,13 @@ export default class View {
         </a>
       </div>
     `
-
+    
     const previewBtn = postElement.querySelector('.preview-btn')
-    previewBtn.addEventListener('click', e => {
+    previewBtn.addEventListener('click', (e) => {
       e.preventDefault()
       this.handlePreviewClick(post)
     })
-
+    
     return postElement
   }
 
@@ -223,36 +220,36 @@ export default class View {
 
   showModal(post) {
     console.log('showModal called for post:', post)
-
+    
     const modalElement = document.getElementById('postModal')
     if (!modalElement) {
       console.error('Modal element not found!')
       return
     }
-
+    
     const modalTitle = document.getElementById('postModalLabel')
     const modalDescription = document.getElementById('postDescription')
     const modalLink = document.getElementById('postLink')
-
+    
     if (!modalTitle || !modalDescription || !modalLink) {
       console.error('Modal elements not found!')
       return
     }
-
+    
     modalTitle.textContent = post.title
     modalDescription.textContent = post.description || 'Описание отсутствует'
     modalLink.href = post.link
-
+    
     console.log('Modal content set:', {
       title: post.title,
       description: post.description,
     })
-
+    
     if (!this.modal) {
       console.log('Initializing modal...')
       this.modal = new Modal(modalElement)
     }
-
+    
     this.modal.show()
     console.log('Modal show() called')
   }

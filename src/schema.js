@@ -12,7 +12,7 @@ const setupYupLocale = () => {
   })
 }
 
-export const createRssSchema = existingUrls => {
+export const createRssSchema = (existingUrls) => {
   setupYupLocale()
 
   return yup.string()
