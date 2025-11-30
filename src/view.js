@@ -17,7 +17,7 @@ export default class View {
     this.createModal();
     
     this.state = onChange({
-      error: null,
+      error: 'initial', // Начальное состояние не null
       valid: true,
       processed: false,
       feeds: [],
@@ -57,7 +57,6 @@ export default class View {
   createContainers() {
     const container = document.querySelector('.container-fluid');
     
-    // Создаем контейнеры для фидов и постов
     this.feedsContainer = document.createElement('div');
     this.feedsContainer.className = 'mt-5';
     this.feedsContainer.innerHTML = `
@@ -114,13 +113,20 @@ export default class View {
 
   handleError(error) {
     console.log('Handle error:', error);
-    if (error) {
+    
+    // Очищаем предыдущие классы
+    this.feedback.className = 'feedback mt-2 small';
+    
+    if (error && error !== 'initial') {
       this.feedback.textContent = i18n.t(`errors.${error}`);
-      this.feedback.className = 'feedback mt-2 small text-danger';
-    } else {
+      this.feedback.classList.add('text-danger');
+    } else if (error === null) {
       // Когда error = null, показываем успешное сообщение
       this.feedback.textContent = i18n.t('ui.success');
-      this.feedback.className = 'feedback mt-2 small text-success';
+      this.feedback.classList.add('text-success');
+    } else {
+      // initial state - очищаем сообщение
+      this.feedback.textContent = '';
     }
   }
 

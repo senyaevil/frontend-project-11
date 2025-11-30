@@ -31,7 +31,7 @@ export default class App {
     const url = this.view.input.value.trim();
     
     this.view.setLoading(true);
-    this.view.setError(null);
+    this.view.setError(null); // Сбрасываем ошибку перед началом
 
     const validator = new Validator(createRssSchema(this.feeds));
     
@@ -44,7 +44,7 @@ export default class App {
         return this.addFeed(url);
       })
       .then(() => {
-        // Успешное добавление - очищаем ошибку, что покажет успешное сообщение
+        // Успешное добавление - устанавливаем error в null чтобы показать успешное сообщение
         this.view.setError(null);
         this.view.markProcessed();
       })
