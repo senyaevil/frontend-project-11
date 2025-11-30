@@ -48,7 +48,7 @@ export default class App {
         if (error.message !== 'Validation failed') {
           this.view.setError(this.getErrorMessage(error))
         }
-      }
+      })
       .finally(() => {
         this.view.setLoading(false)
       })
