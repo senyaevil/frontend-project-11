@@ -31,7 +31,7 @@ export default class App {
     const url = this.view.input.value.trim();
     
     this.view.setLoading(true);
-    this.view.setError(null);
+    this.view.setError(null); // Сбрасываем ошибку
 
     const validator = new Validator(createRssSchema(this.feeds));
     
@@ -39,15 +39,15 @@ export default class App {
       .then((result) => {
         console.log('Validation result:', result);
         if (!result.isValid) {
-          // Передаем ключ ошибки напрямую
           this.view.setError(result.errors._form);
           return Promise.reject(new Error('Validation failed'));
         }
         return this.addFeed(url);
       })
       .then(() => {
-        // Успешное добавление
-        this.view.setError(null);
+        console.log('Feed added successfully');
+        // Явно устанавливаем успешное состояние
+        this.view.setSuccess();
         this.view.markProcessed();
       })
       .catch((error) => {

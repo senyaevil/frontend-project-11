@@ -17,12 +17,12 @@ export default class View {
     this.createModal();
     
     this.state = onChange({
+      status: 'idle', // 'idle', 'loading', 'success', 'error'
       error: null,
       valid: true,
       processed: false,
       feeds: [],
       posts: [],
-      loading: false,
       readPosts: new Set()
     }, this.render.bind(this));
     
@@ -86,6 +86,10 @@ export default class View {
   render(path, value) {
     console.log('View render:', path, value);
     
+    if (path === 'status') {
+      this.handleStatus(value);
+    }
+    
     if (path === 'error') {
       this.handleError(value);
     }
@@ -105,30 +109,35 @@ export default class View {
     if (path === 'posts' || path === 'readPosts') {
       this.renderPosts();
     }
+  }
+
+  handleStatus(status) {
+    console.log('Handle status:', status);
     
-    if (path === 'loading') {
-      this.handleLoading(value);
+    if (status === 'loading') {
+      this.submitButton.disabled = true;
+      this.submitButton.textContent = 'Загрузка...';
+    } else {
+      this.submitButton.disabled = false;
+      this.submitButton.textContent = i18n.t('ui.submit');
+    }
+    
+    if (status === 'success') {
+      this.feedback.textContent = i18n.t('ui.success');
+      this.feedback.className = 'feedback mt-2 small text-success';
     }
   }
 
   handleError(error) {
     console.log('Handle error:', error);
     
-    // Очищаем предыдущие классы
-    this.feedback.className = 'feedback mt-2 small';
-    
     if (error) {
-      // Получаем текст ошибки через i18next
-      const errorText = i18n.t(error);
-      this.feedback.textContent = errorText;
-      this.feedback.classList.add('text-danger');
-    } else if (error === null) {
-      // Когда error = null, показываем успешное сообщение
-      this.feedback.textContent = i18n.t('ui.success');
-      this.feedback.classList.add('text-success');
+      this.feedback.textContent = i18n.t(error);
+      this.feedback.className = 'feedback mt-2 small text-danger';
     } else {
-      // Очищаем сообщение
+      // Очищаем сообщение об ошибке
       this.feedback.textContent = '';
+      this.feedback.className = 'feedback mt-2 small';
     }
   }
 
@@ -142,11 +151,6 @@ export default class View {
     this.input.focus();
     this.state.valid = true;
     this.state.processed = false;
-  }
-
-  handleLoading(loading) {
-    this.submitButton.disabled = loading;
-    this.submitButton.textContent = loading ? 'Загрузка...' : i18n.t('ui.submit');
   }
 
   renderFeeds() {
@@ -234,13 +238,19 @@ export default class View {
   }
 
   setError(message) {
+    this.state.status = 'error';
     this.state.error = message;
     this.state.valid = false;
   }
 
-  setValid() {
+  setSuccess() {
+    this.state.status = 'success';
     this.state.error = null;
     this.state.valid = true;
+  }
+
+  setLoading(loading) {
+    this.state.status = loading ? 'loading' : 'idle';
   }
 
   markProcessed() {
@@ -253,9 +263,5 @@ export default class View {
 
   addPosts(posts) {
     this.state.posts = [...this.state.posts, ...posts];
-  }
-
-  setLoading(loading) {
-    this.state.loading = loading;
   }
 }
