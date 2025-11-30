@@ -286,5 +286,4 @@ export default class View {
   addPosts(posts) {
     this.state.posts = [...this.state.posts, ...posts]
   }
-
 }
