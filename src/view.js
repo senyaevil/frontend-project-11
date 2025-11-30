@@ -17,7 +17,7 @@ export default class View {
     this.createModal();
     
     this.state = onChange({
-      status: 'idle', // 'idle', 'loading', 'success', 'error'
+      status: 'idle',
       error: null,
       valid: true,
       processed: false,
@@ -135,7 +135,6 @@ export default class View {
       this.feedback.textContent = i18n.t(error);
       this.feedback.className = 'feedback mt-2 small text-danger';
     } else {
-      // Очищаем сообщение об ошибке
       this.feedback.textContent = '';
       this.feedback.className = 'feedback mt-2 small';
     }
@@ -185,51 +184,75 @@ export default class View {
     });
   }
 
-// Альтернатива - минималистичный подход
-createPostElement(post, isRead) {
-  const postElement = document.createElement('div');
-  postElement.className = 'list-group-item';
-  
-  const titleClass = isRead ? 'fw-normal' : 'fw-bold';
-  
-  postElement.innerHTML = `
-    <div class="d-flex justify-content-between align-items-center">
-      <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
-        ${post.title}
-      </a>
-      <button type="button" class="btn btn-outline-primary btn-sm preview-btn ms-3" data-post-id="${post.id}">
-        ${i18n.t('ui.preview')}
-      </button>
-      <a href="${post.link}" class="btn btn-primary btn-sm ms-1" target="_blank" rel="noopener noreferrer">
-        ${i18n.t('ui.read')}
-      </a>
-    </div>
-  `;
-  
-  const previewBtn = postElement.querySelector('.preview-btn');
-  previewBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    this.handlePreviewClick(post);
-  });
-  
-  return postElement;
-}
+  createPostElement(post, isRead) {
+    const postElement = document.createElement('div');
+    postElement.className = 'list-group-item';
+    
+    const titleClass = isRead ? 'fw-normal' : 'fw-bold';
+    
+    postElement.innerHTML = `
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="${post.link}" class="${titleClass}" target="_blank" rel="noopener noreferrer">
+          ${post.title}
+        </a>
+        <button type="button" class="btn btn-outline-primary btn-sm preview-btn ms-3" data-post-id="${post.id}">
+          ${i18n.t('ui.preview')}
+        </button>
+        <a href="${post.link}" class="btn btn-primary btn-sm ms-1" target="_blank" rel="noopener noreferrer">
+          ${i18n.t('ui.read')}
+        </a>
+      </div>
+    `;
+    
+    const previewBtn = postElement.querySelector('.preview-btn');
+    previewBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.handlePreviewClick(post);
+    });
+    
+    return postElement;
+  }
 
   handlePreviewClick(post) {
+    console.log('Preview clicked for post:', post);
     this.showModal(post);
     this.markAsRead(post.id);
   }
 
   showModal(post) {
+    console.log('showModal called for post:', post);
+    
+    const modalElement = document.getElementById('postModal');
+    if (!modalElement) {
+      console.error('Modal element not found!');
+      return;
+    }
+    
     const modalTitle = document.getElementById('postModalLabel');
     const modalDescription = document.getElementById('postDescription');
     const modalLink = document.getElementById('postLink');
+    
+    if (!modalTitle || !modalDescription || !modalLink) {
+      console.error('Modal elements not found!');
+      return;
+    }
     
     modalTitle.textContent = post.title;
     modalDescription.textContent = post.description || 'Описание отсутствует';
     modalLink.href = post.link;
     
+    console.log('Modal content set:', {
+      title: post.title,
+      description: post.description
+    });
+    
+    if (!this.modal) {
+      console.log('Initializing modal...');
+      this.modal = new Modal(modalElement);
+    }
+    
     this.modal.show();
+    console.log('Modal show() called');
   }
 
   markAsRead(postId) {
@@ -264,8 +287,3 @@ createPostElement(post, isRead) {
     this.state.posts = [...this.state.posts, ...posts];
   }
 }
-
-
-
-
-

@@ -46,7 +46,6 @@ export default class App {
       })
       .then(() => {
         console.log('Feed added successfully');
-        // Явно устанавливаем успешное состояние
         this.view.setSuccess();
         this.view.markProcessed();
       })
@@ -65,7 +64,7 @@ export default class App {
     return fetchRSS(url)
       .then((content) => {
         const { feed, posts } = parseRSS(content);
-        console.log('Loaded posts:', posts); // Добавлено логирование постов
+        console.log('Loaded posts:', posts);
         const feedId = Date.now();
         
         this.feeds.push(url);
