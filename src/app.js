@@ -11,7 +11,6 @@ export default class App {
     this.feeds = []
     this.feedData = []
     this.posts = []
-
     initI18n().then(() => {
       this.init()
     })
@@ -19,8 +18,7 @@ export default class App {
 
   init() {
     this.view = new View()
-
-    this.view.form.addEventListener('submit', e => {
+    this.view.form.addEventListener('submit', (e) => {
       e.preventDefault()
       this.handleSubmit()
     })
@@ -28,14 +26,11 @@ export default class App {
 
   handleSubmit() {
     const url = this.view.input.value.trim()
-
     this.view.setLoading(true)
     this.view.setError(null)
-
     const validator = new Validator(createRssSchema(this.feeds))
-
     validator.validate(url)
-      .then(result => {
+      .then((result) => {
         console.log('Validation result:', result)
         if (!result.isValid) {
           this.view.setError(result.errors._form)
@@ -48,7 +43,7 @@ export default class App {
         this.view.setSuccess()
         this.view.markProcessed()
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Submit error:', error.message)
         if (error.message !== 'Validation failed') {
           this.view.setError(this.getErrorMessage(error))
@@ -61,11 +56,10 @@ export default class App {
 
   addFeed(url) {
     return fetchRSS(url)
-      .then(content => {
+      .then((content) => {
         const { feed, posts } = parseRSS(content)
         console.log('Loaded posts:', posts)
         const feedId = Date.now()
-
         this.feeds.push(url)
         this.feedData.push({
           id: feedId,
@@ -74,19 +68,15 @@ export default class App {
           description: feed.description,
           postLinks: posts.map(post => post.link),
         })
-
-        const postsWithFeedId = posts.map(post => ({
+        const postsWithFeedId = posts.map((post) => ({
           ...post,
           id: Date.now() + Math.random(),
           feedId,
           description: post.description || '',
         }))
-
         this.posts = [...this.posts, ...postsWithFeedId]
-
         this.view.addFeed(feed)
         this.view.addPosts(postsWithFeedId)
-
         return Promise.resolve()
       })
   }
@@ -94,8 +84,7 @@ export default class App {
   getErrorMessage(error) {
     if (error.message.includes('Network')) {
       return 'errors.network'
-    }
-    else if (error.message.includes('RSS') || error.message.includes('Invalid RSS')) {
+    } else if (error.message.includes('RSS') || error.message.includes('Invalid RSS')) {
       return 'errors.rss'
     }
     return 'errors.unknown'

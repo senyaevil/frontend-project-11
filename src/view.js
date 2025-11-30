@@ -158,8 +158,8 @@ export default class View {
     if (!feedsList) return
 
     feedsList.innerHTML = ''
-
-    this.state.feeds.forEach(feed => {
+    
+    this.state.feeds.forEach((feed) => {
       const feedElement = document.createElement('div')
       feedElement.className = 'list-group-item'
       feedElement.innerHTML = `
@@ -178,7 +178,7 @@ export default class View {
 
     const sortedPosts = [...this.state.posts].sort((a, b) => b.id - a.id)
 
-    sortedPosts.forEach(post => {
+    sortedPosts.forEach((post) => {
       const isRead = this.state.readPosts.has(post.id)
       const postElement = this.createPostElement(post, isRead)
       postsList.appendChild(postElement)
@@ -206,7 +206,7 @@ export default class View {
     `
 
     const previewBtn = postElement.querySelector('.preview-btn')
-    previewBtn.addEventListener('click', e => {
+    previewBtn.addEventListener('click', (e) => {
       e.preventDefault()
       this.handlePreviewClick(post)
     })
