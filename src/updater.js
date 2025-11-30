@@ -59,4 +59,3 @@ export default class Updater {
     return fetchedPosts.filter(post => !existingLinks.has(post.link))
   }
 }
-
