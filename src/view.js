@@ -158,7 +158,6 @@ export default class View {
     if (!feedsList) return
 
     feedsList.innerHTML = ''
-    
     this.state.feeds.forEach((feed) => {
       const feedElement = document.createElement('div')
       feedElement.className = 'list-group-item'
@@ -287,4 +286,5 @@ export default class View {
   addPosts(posts) {
     this.state.posts = [...this.state.posts, ...posts]
   }
+
 }
