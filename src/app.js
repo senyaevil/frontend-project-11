@@ -66,7 +66,7 @@ export default class App {
           url,
           title: feed.title,
           description: feed.description,
-          postLinks: posts.map(post => post.link),
+          postLinks: posts.map((post) => post.link),
         })
         const postsWithFeedId = posts.map((post) => ({
           ...post,
@@ -90,3 +90,4 @@ export default class App {
     return 'errors.unknown'
   }
 }
+
