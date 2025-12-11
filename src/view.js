@@ -112,7 +112,8 @@ export default class View {
     if (status === 'loading') {
       this.submitButton.disabled = true
       this.submitButton.textContent = 'Загрузка...'
-    } else {
+    } 
+    else {
       this.submitButton.disabled = false
       this.submitButton.textContent = i18n.t('ui.submit')
     }
@@ -127,7 +128,8 @@ export default class View {
     if (error) {
       this.feedback.textContent = i18n.t(error)
       this.feedback.className = 'feedback mt-2 small text-danger'
-    } else {
+    } 
+    else {
       this.feedback.textContent = ''
       this.feedback.className = 'feedback mt-2 small'
     }
