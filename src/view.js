@@ -236,9 +236,19 @@ export default class View {
     modalDescription.textContent = post.description || 'Описание отсутствует'
     modalLink.href = post.link
 
+    console.log('Modal content set:', {
+      title: post.title,
+      description: post.description,
+    })
+
     if (!this.modal) {
+      console.log('Initializing modal...')
       this.modal = new Modal(modalElement)
     }
+    
+    this.modal.show()
+    console.log('Modal show() called')
+  }
 
   markAsRead(postId) {
     this.state.readPosts.add(postId)
