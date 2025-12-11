@@ -83,7 +83,6 @@ export default class View {
   }
 
   render(path, value) {
-    console.log('View render:', path, value)
 
     if (path === 'status') {
       this.handleStatus(value)
@@ -111,7 +110,6 @@ export default class View {
   }
 
   handleStatus(status) {
-    console.log('Handle status:', status)
 
     if (status === 'loading') {
       this.submitButton.disabled = true
@@ -129,7 +127,6 @@ export default class View {
   }
 
   handleError(error) {
-    console.log('Handle error:', error)
 
     if (error) {
       this.feedback.textContent = i18n.t(error)
@@ -214,13 +211,11 @@ export default class View {
   }
 
   handlePreviewClick(post) {
-    console.log('Preview clicked for post:', post)
     this.showModal(post)
     this.markAsRead(post.id)
   }
 
   showModal(post) {
-    console.log('showModal called for post:', post)
 
     const modalElement = document.getElementById('postModal')
     if (!modalElement) {
@@ -241,19 +236,9 @@ export default class View {
     modalDescription.textContent = post.description || 'Описание отсутствует'
     modalLink.href = post.link
 
-    console.log('Modal content set:', {
-      title: post.title,
-      description: post.description,
-    })
-
     if (!this.modal) {
-      console.log('Initializing modal...')
       this.modal = new Modal(modalElement)
     }
-
-    this.modal.show()
-    console.log('Modal show() called')
-  }
 
   markAsRead(postId) {
     this.state.readPosts.add(postId)
@@ -287,3 +272,4 @@ export default class View {
     this.state.posts = [...this.state.posts, ...posts]
   }
 }
+
