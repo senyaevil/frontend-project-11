@@ -33,7 +33,6 @@ export default class App {
     const validator = new Validator(createRssSchema(this.feeds))
     validator.validate(url)
       .then((result) => {
-        console.log('Validation result:', result)
         if (!result.isValid) {
           this.view.setError(result.errors._form)
           return Promise.reject(new Error('Validation failed'))
@@ -41,7 +40,6 @@ export default class App {
         return this.addFeed(url)
       })
       .then(() => {
-        console.log('Feed added successfully')
         this.view.setSuccess()
         this.view.markProcessed()
       })
@@ -58,7 +56,6 @@ export default class App {
     return fetchRSS(url)
       .then((content) => {
         const { feed, posts } = parseRSS(content)
-        console.log('Loaded posts:', posts)
 
         const feedId = Date.now()
         this.feeds.push(url)
@@ -95,3 +92,4 @@ export default class App {
     return 'errors.unknown'
   }
 }
+
