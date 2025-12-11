@@ -231,7 +231,7 @@ export default class View {
     if (!this.modal) {
       this.modal = new Modal(modalElement)
     }
-    
+
     this.modal.show()
   }
 
