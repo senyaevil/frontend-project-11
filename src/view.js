@@ -83,7 +83,6 @@ export default class View {
   }
 
   render(path, value) {
-
     if (path === 'status') {
       this.handleStatus(value)
     }
@@ -110,12 +109,10 @@ export default class View {
   }
 
   handleStatus(status) {
-
     if (status === 'loading') {
       this.submitButton.disabled = true
       this.submitButton.textContent = 'Загрузка...'
-    }
-    else {
+    } else {
       this.submitButton.disabled = false
       this.submitButton.textContent = i18n.t('ui.submit')
     }
@@ -127,12 +124,10 @@ export default class View {
   }
 
   handleError(error) {
-
     if (error) {
       this.feedback.textContent = i18n.t(error)
       this.feedback.className = 'feedback mt-2 small text-danger'
-    }
-    else {
+    } else {
       this.feedback.textContent = ''
       this.feedback.className = 'feedback mt-2 small'
     }
@@ -216,10 +211,8 @@ export default class View {
   }
 
   showModal(post) {
-
     const modalElement = document.getElementById('postModal')
     if (!modalElement) {
-      console.error('Modal element not found!')
       return
     }
 
@@ -228,7 +221,6 @@ export default class View {
     const modalLink = document.getElementById('postLink')
 
     if (!modalTitle || !modalDescription || !modalLink) {
-      console.error('Modal elements not found!')
       return
     }
 
@@ -236,18 +228,11 @@ export default class View {
     modalDescription.textContent = post.description || 'Описание отсутствует'
     modalLink.href = post.link
 
-    console.log('Modal content set:', {
-      title: post.title,
-      description: post.description,
-    })
-
     if (!this.modal) {
-      console.log('Initializing modal...')
       this.modal = new Modal(modalElement)
     }
     
     this.modal.show()
-    console.log('Modal show() called')
   }
 
   markAsRead(postId) {
