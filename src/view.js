@@ -282,4 +282,3 @@ export default class View {
     this.state.posts = [...this.state.posts, ...posts]
   }
 }
-
